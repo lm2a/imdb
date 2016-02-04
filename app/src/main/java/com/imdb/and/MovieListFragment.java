@@ -96,6 +96,7 @@ public class MovieListFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Restore the previously serialized activated item position.
+
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));

@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +35,7 @@ public class ImdbActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
-
+        MMLog.i("X - onCreate");
 
 
         if (findViewById(R.id.movie_detail_container) != null) {
@@ -51,6 +53,17 @@ public class ImdbActivity extends FragmentActivity
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment f = manager.findFragmentById(R.id.movie_list);
+        if (manager.findFragmentById(R.id.movie_list) == null) {
+            manager.beginTransaction().add(R.id.movie_list, f)
+                    .commit();
+        }
     }
 
     /**
@@ -159,4 +172,21 @@ public class ImdbActivity extends FragmentActivity
                 .show();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MMLog.i("X - onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MMLog.i("X - onStop()");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MMLog.i("X - onStart()");
+    }
 }

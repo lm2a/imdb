@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.imdb.and.helpers.MMLog;
 import com.imdb.and.helpers.MySingleton;
+import com.imdb.and.helpers.TCImageLoader;
 import com.imdb.and.helpers.Util;
 import com.imdb.and.model.slim.Genre;
 import com.imdb.and.model.slim.Movie;
@@ -31,7 +32,7 @@ public class MovieDetailFragment extends Fragment {
 
 	public static final String ARG_ITEM_ID = "item_id";
 	private int id;
-
+	private TCImageLoader mTCImageLoader;
 
 	public MovieDetailFragment() {
 	}
@@ -39,7 +40,7 @@ public class MovieDetailFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		mTCImageLoader = new TCImageLoader(getContext());
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
 			String sid = getArguments().getString(ARG_ITEM_ID);
 			MMLog.i(sid);
@@ -90,46 +91,8 @@ public class MovieDetailFragment extends Fragment {
 
 
 	public void populateImage(ImageView img, String imageUrl) {
-		String basePosterThumb = "https://image.tmdb.org/t/p/w500";
-		new DownloadImageTask(img).execute(basePosterThumb + imageUrl);
+		String basePosterThumb = "https://image.tmdb.org/t/p/w500"+imageUrl;
+		mTCImageLoader.display(basePosterThumb, img, R.drawable.placeholder);
 	}
 
-	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-		ImageView bmImage;
-
-		private ProgressDialog dialog = new ProgressDialog(getActivity());
-
-		public DownloadImageTask(ImageView bmImage) {
-			this.bmImage = bmImage;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			this.dialog.setMessage("Please wait");
-			this.dialog.show();
-		}
-
-		protected Bitmap doInBackground(String... urls) {
-			String urldisplay = urls[0];
-			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new java.net.URL(urldisplay).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-			}
-			return mIcon11;
-		}
-
-		protected void onPostExecute(Bitmap result) {
-
-
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-
-			bmImage.setImageBitmap(result);
-		}
-	}
 }

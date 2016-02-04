@@ -21,9 +21,10 @@ public class TCImageLoader implements ComponentCallbacks2 {
     public TCImageLoader(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(
             Context.ACTIVITY_SERVICE);
-        int maxKb = am.getMemoryClass() * 1024;
-        int limitKb = maxKb / 8; // 1/8th of total ram
-        cache = new TCLruCache(limitKb);
+        int maxBytes = am.getMemoryClass() * 1024 * 1024;
+        int limitBytes = maxBytes / 8; // 1/8th of total ram
+        MMLog.i("Adapter - imagen limitBytes: "+limitBytes);
+        cache = new TCLruCache(limitBytes);
     }
 
     public void display(String url, ImageView imageview, int defaultresource) {
@@ -32,9 +33,10 @@ public class TCImageLoader implements ComponentCallbacks2 {
         Bitmap image = cache.get(url);
         if (image != null) {
             imageview.setImageBitmap(image);
-            MMLog.i("Adapter - imagen no nula");
+            MMLog.i("Adapter - imagen "+url+" no nula");
         }
         else {
+            MMLog.i("Adapter - imagen "+url+" NULA");
             new SetImageTask(imageview).execute(url);
         }
     }
@@ -67,7 +69,9 @@ public class TCImageLoader implements ComponentCallbacks2 {
             try {
                 bmp = getBitmapFromURL(url);
                 if (bmp != null) {
+                    MMLog.i("Adapter - imagen "+url+" guardada en cache");
                     cache.put(url, bmp);
+                    MMLog.i("Adapter - Cache size: "+cache.size());
                 }
                 else {
                     return 0;

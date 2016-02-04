@@ -3,7 +3,7 @@ package com.imdb.and.helpers;
 
 public class Constants {
 	//TODO
-	public static final boolean IN_DEBUG = false;
+	public static final boolean IN_DEBUG = true;
 	public static final String API_KEY = "c804980d1f7e6be70c7d58ed0e41f0fd";
 	public static final String END_POINT = "https://api.themoviedb.org/3/movie/";
 	public static final String GENRE_END_POINT = "http://api.themoviedb.org/3/genre/movie/list";
