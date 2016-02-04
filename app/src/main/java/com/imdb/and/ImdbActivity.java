@@ -172,21 +172,5 @@ public class ImdbActivity extends FragmentActivity
                 .show();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MMLog.i("X - onPause()");
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        MMLog.i("X - onStop()");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        MMLog.i("X - onStart()");
-    }
 }

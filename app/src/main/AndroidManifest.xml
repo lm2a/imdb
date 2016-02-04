@@ -32,7 +32,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imdb.and.ImdbActivity" />
         </activity>
-        <!-- <activity android:name="com.lm2a.imdb.MovieListActivity" /> -->
     </application>
 
 </manifest>
